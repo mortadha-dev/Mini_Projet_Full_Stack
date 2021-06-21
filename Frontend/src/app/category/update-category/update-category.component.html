@@ -1,0 +1,27 @@
+<form>
+  <h2>Modifier un category :</h2>
+  <div class="form-group" style="padding-top: 100px; padding-left: 300px">
+    <label>Nom Category</label>
+    <input
+      type="text"
+      [(ngModel)]="currentCategory.nom"
+      name="nom"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group" style="padding-top: 50px; padding-left: 300px">
+    <label>quantity category</label>
+    <input
+      type="number"
+      [(ngModel)]="currentCategory.quantity"
+      name="quantity"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-check" style="padding-top: 15px; padding-left: 300px">
+    <button type="submit" (click)="updateCategory()" class="btn btn-primary">
+      Submit
+    </button>
+  </div>
+</form>

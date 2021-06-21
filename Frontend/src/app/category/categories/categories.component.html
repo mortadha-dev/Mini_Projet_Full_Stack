@@ -1,0 +1,85 @@
+<br />
+<br />
+<br />
+<div class="input-group" style="padding-top: 5px; padding-left: 250px">
+  <input
+    class="form-control"
+    type="text"
+    placeholder="Search for category by name..."
+    [(ngModel)]="nom"
+    (ngModelChange)="Search()"
+    aria-label="Search"
+    aria-describedby="basic-addon2"
+  />
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="button">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+
+<div class="container" style="padding-top: 5px; padding-left: 250px">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr>
+          <th>Nom</th>
+          <th>Quantity</th>
+          <th>Date Création</th>
+          <th>Date modification</th>
+        </tr>
+        <tbody
+          *ngFor="
+            let category of categories
+              | paginate: { itemsPerPage: 2, currentPage: p }
+          "
+          [routerLink]="['/categoryproducts', category.id]"
+        >
+          <tr>
+            <td>{{ category.nom }}</td>
+            <td>{{ category.quantity }}</td>
+            <td>{{ category.dateCreation | date: "dd/MM/yyyy" }}</td>
+            <td>{{ category.dateModif | date: "dd/MM/yyyy" }}</td>
+            <!--
+            <td>
+              <a
+                class="btn btn-success"
+                [routerLink]="['/categoryproducts', category.id]"
+                >Afficher produits associés</a
+              >
+            </td>
+             -->
+            <td>
+              <a
+                class="btn btn-success"
+                [routerLink]="['/updateCategory', category.id]"
+                >Modifier</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger"
+                (click)="supprimerCategory(category)"
+                class="btn btn-danger"
+              >
+                Supprimer categorie
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </table>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        [routerLink]="['/add-category']"
+      >
+        Ajouter une catégorie
+      </button>
+    </div>
+  </div>
+</div>

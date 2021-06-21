@@ -1,0 +1,28 @@
+<div class="flexbox-parent" style="padding-top: 200px; padding-left: 250px">
+  <div class="container" layout-align="center center" style="min-height: 10px">
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <table class="table table-striped">
+          <tr>
+            <th>Nom</th>
+            <th>Quantity</th>
+            <th>Disponible</th>
+            <th>Date Création</th>
+            <th>Date modification</th>
+          </tr>
+          <tbody *ngFor="let produit of produits">
+            <tr>
+              <td>{{ produit.nom }}</td>
+              <td>{{ produit.quantity }}</td>
+              <td>{{ produit.disponible }}</td>
+              <td>{{ produit.dateCreation | date: "dd/MM/yyyy" }}</td>
+              <td>{{ produit.dateModif | date: "dd/MM/yyyy" }}</td>
+
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="container" style="padding-top: 200px; padding-left: 250px">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Quantity</th>
+          <th>Disponible</th>
+          <th>Date Création</th>
+          <th>Date modification</th>
+        </tr>
+        <tbody *ngFor="let produit of produits">
+          <tr>
+            <td>{{ produit.id }}</td>
+            <td>{{ produit.nom }}</td>
+            <td>{{ produit.quantity }}</td>
+            <td>{{ produit.disponible }}</td>
+            <td>{{ produit.dateCreation | date: "dd/MM/yyyy" }}</td>
+            <td>{{ produit.dateModif | date: "dd/MM/yyyy" }}</td>
+
+            <td></td>
+            <td>
+              <a
+                class="btn btn-success"
+                [routerLink]="['/updateProduit', produit.id]"
+                >Modifier</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger"
+                (click)="supprimerProduit(produit)"
+                class="btn btn-warning"
+              >
+                Supprimer produit
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        [routerLink]="['/add-produit']"
+      >
+        Ajouter produit dans cette catégorie
+      </button>
+    </div>
+  </div>
+</div>
+
+<br />
+<h3 style="text-align: center">Choose Export Format</h3>
+<br />
+
+<div class="row">
+  <div class="col-12">
+    <div style="padding-top: 5px; padding-left: 250px">
+      <div
+        class="col-3"
+        style="display: inline-block; cursor: pointer; margin-left: 10 px"
+      >
+        <div style="display: flex">
+          <div (click)="exportPdfProducts()">
+            <img
+              src="../../../assets/img/pdf.jpg"
+              height="200"
+              width="200"
+              alt="image"
+              style="margin-left: 200 px"
+            />
+          </div>
+          <div (click)="exportExcelProducts()">
+            <img
+              src="../../../assets/img/excel.png"
+              height="200"
+              width="200"
+              alt="image"
+              style="margin-left: 300px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

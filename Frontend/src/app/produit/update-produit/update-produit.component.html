@@ -1,0 +1,27 @@
+<form>
+  <h2>Modifier un Produit :</h2>
+  <div class="form-group" style="padding-top: 100px; padding-left: 300px">
+    <label>Nom Produit</label>
+    <input
+      type="text"
+      [(ngModel)]="currentProduit.nom"
+      name="nomProduit"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group" style="padding-top: 50px; padding-left: 300px">
+    <label>Prix Produit</label>
+    <input
+      type="number"
+      [(ngModel)]="currentProduit.quantity"
+      name="prixProduit"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-check" style="padding-top: 15px; padding-left: 300px">
+    <button type="submit" (click)="updateProduit()" class="btn btn-primary">
+      Submit
+    </button>
+  </div>
+</form>

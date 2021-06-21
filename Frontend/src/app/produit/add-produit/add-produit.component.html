@@ -1,0 +1,48 @@
+<form>
+  <div class="form-group" style="padding-top: 100px; padding-left: 300px">
+    <label for="exampleInputEmail1">Nom Produit</label>
+    <input
+      type="text"
+      class="form-control"
+      aria-describedby="emailHelp"
+      placeholder="Enter product name"
+      [(ngModel)]="newProduit.nom"
+      name="nom"
+    />
+  </div>
+  <div
+    class="form-group"
+    *ngIf="selectedDay == 'True'"
+    style="padding-top: 50px; padding-left: 300px"
+  >
+    <label for="exampleInputPassword1">Quantity</label>
+    <input
+      type="number"
+      class="form-control"
+      placeholder="quantity"
+      [(ngModel)]="newProduit.quantity"
+      name="Quantity"
+    />
+  </div>
+
+  <div class="form-group" style="padding-top: 50px; padding-left: 300px">
+    <label>disponibilité</label>
+    <div *ngFor="let day of days">
+      <input
+        type="radio"
+        name="ddddd"
+        value="{{ day }}"
+        (change)="radioChangeHandler($event)"
+      />
+      <i>{{ day }}</i>
+      <br />
+    </div>
+    <span>The disponibility is :</span><b>{{ selectedDay }}</b>
+  </div>
+
+  <div class="form-check" style="padding-top: 15px; padding-left: 300px">
+    <button type="submit" (click)="addProduit()" class="btn btn-primary">
+      Submit
+    </button>
+  </div>
+</form>
