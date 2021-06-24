@@ -8,18 +8,14 @@ import oga.stage.product_management.services.ExportProductService;
 import oga.stage.product_management.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
-import org.springframework.http.HttpHeaders.* ;
 
 import java.io.IOException;
-import java.security.AccessControlContext;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -28,85 +24,76 @@ import java.util.List;
 public class ProductController {
 
 
-    private ProductService productserv;
+    private final  ProductService productService;
+    private final CategoryService categoryService;
 
     @Autowired
-    ProductController(ProductService productserv) {
-        this.productserv = productserv;
+    ProductController(ProductService productService,CategoryService categoryService)
+    {
+        this.productService = productService;
+        this.categoryService=categoryService ;
     }
 
-    @Autowired
-    private CategoryService categorieserv;
 
-    @Autowired
-    private ExportProductService exp;
 
     @CrossOrigin(origins = "http://localhost:8085")
     @PostMapping("/AddProduct/{catid}")
-    public void AddProduct(@RequestBody Product product, @PathVariable("catid") long catitd) {
-        Category cat = categorieserv.FindCategory(catitd).orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catitd));
+    public void addProduct(@RequestBody Product product, @PathVariable("catid") long catitd) {
+        Category cat = categoryService.findCategory(catitd).orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catitd));
         product.setCategory(cat);
         if(!product.isDisponible()){
             product.setQuantity(0);
-            productserv.AddProduct(product);
         }
-        else{
-            productserv.AddProduct(product);
-        }
+        productService.addProduct(product);
 
     }
 
     @GetMapping("/showproducts")
-    public List<Product> ShowProducts() {
-        return productserv.ShowProducts();
+    public List<Product> showProducts() {
+        return productService.showProducts();
     }
 
     @GetMapping("/findbycatid/{catid}")
-    public List<Product> ShowProductsInCat(@PathVariable("catid") long catid) {
-        Category existingCategory = this.categorieserv.FindCategory(catid)
-                .orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catid));
-        return productserv.ShowProductsInCat(catid);
+    public List<Product> showProductsInCat(@PathVariable("catid") long catid) {
+        return productService.ShowProductsInCat(catid);
     }
 
     @GetMapping("/findproduct/{id}")
-    public Product ShowProduct(@PathVariable("id") Long id) {
-        return productserv.FindProduct(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id :" + id));
+    public Product showProduct(@PathVariable("id") Long id) {
+        return productService.findProduct(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id :" + id));
     }
 
     @DeleteMapping("/deleteproduct/{id}")
-    public void DeleteProduct(@PathVariable("id") Long id) {
-        Product existingproduct = this.productserv.FindProduct(id)
-                .orElseThrow(() -> new ResourceNotFoundException("product not found with id :" + id));
-        productserv.DeleteProduct(id);
+    public void deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProduct(id);
     }
 
 
     @PutMapping("/updateproduct/{id}")
-    public void UpdateProduct(@RequestBody Product product, @PathVariable("id") long id) {
-        Product prod = productserv.FindProduct(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id :" + id));
-        Date a = prod.getDateCreation();
+    public void updateProduct(@RequestBody Product product, @PathVariable("id") long id) {
+        Product prod = productService.findProduct(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id :" + id));
         prod.setDateCreation(prod.getDateCreation());
         prod.setDisponible(product.isDisponible());
         prod.setQuantity(product.getQuantity());
         prod.setNom(product.getNom());
-        productserv.UpdateProduct(prod);
+        productService.updateProduct(prod);
 
     }
 
     @GetMapping("/exportpdf/{catid}")
     public ResponseEntity<InputStreamResource> exportTermsPdf(@PathVariable("catid") long catid) {
-        List<Product> products = (List<Product>) productserv.ShowProductsInCat(catid);
+        List<Product> products = productService.ShowProductsInCat(catid);
         ByteArrayInputStream bais = ExportProductService.productsPDFExport(products);
-        HttpHeaders headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=products.pdf");
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
     }
 
     @GetMapping("/exportexcel/{catid}")
     public ResponseEntity<InputStreamResource> exportTermsExcel(@PathVariable("catid") long catid) throws IOException {
-        List<Product> products = (List<Product>) productserv.ShowProductsInCat(catid);
+        List<Product> products = productService.ShowProductsInCat(catid);
         ByteArrayInputStream bais = ExportProductService.productsExcelExport(products);
-        HttpHeaders headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=products.xlsx");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(bais));
     }

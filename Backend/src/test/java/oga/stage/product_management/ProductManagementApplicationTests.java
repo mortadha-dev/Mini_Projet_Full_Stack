@@ -9,91 +9,99 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import java.sql.Timestamp;
-import java.util.Date;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class ProductManagementApplicationTests {
 	@Autowired
-	public CategoryService catserv ;
+	public CategoryService categoryService ;
 
 	@Autowired
-	public ProductService prodserv ;
+	public ProductService productService ;
 
 	@Test
 	public void addCategory( ){
 		Category c = new Category();
 		c.setNom("testunit");
 		c.setQuantity(20);
-		catserv.AddCategory(c);
+		categoryService.addCategory(c);
 	}
 	@Test
-	public void ShowCategories(){
-		 catserv.ShowCategories();
+	public void showCategories(){
+		 categoryService.showCategories();
 	}
 
 	@Test
-	public void ShowCategory(){
+	public void showCategory(){
 		long id= 2L ;
-		 catserv.FindCategory(id).get();
+		if(categoryService.findCategory(id).isPresent())
+		 categoryService.findCategory(id).get();
 	}
 //	@Test
-	public void DeleteCategory(){
+	public void deleteCategory(){
 		long id = 15L ;
-		catserv.DeleteCategory(id);
+		categoryService.deleteCategory(id);
 	}
 	@Test
-	public void UpdateCategory(){
+	public void updateCategory(){
 		long id = 16L ;
-		Category cat = catserv.FindCategory(id).get() ;
-		Date a = cat.getDateCreation();
-		cat.setDateCreation((Timestamp) cat.getDateCreation());
-		cat.setQuantity(300);
-		cat.setNom("going up ");
-		catserv.UpdateCategory(cat);
+		if(categoryService.findCategory(id).isPresent()){
+			Category cat = categoryService.findCategory(id).get() ;
+			cat.setDateCreation(cat.getDateCreation());
+			cat.setQuantity(300);
+			cat.setNom("going up ");
+			categoryService.updateCategory(cat);
+
+		}
+
 	}
 	@Test
-	public void AddProduct() {
+	public void addProduct() {
 		Product product = new Product();
 		long catid = 17L ;
-		Category cat = catserv.FindCategory(catid).get();
-		product.setCategory(cat);
-		product.isDisponible();
-		product.setNom("moqejaqmin");
-		product.setQuantity(8960);
-		prodserv.AddProduct(product);
-	}
-    @Test
-	public void ShowProducts() {
+		if(categoryService.findCategory(catid).isPresent()){
+			Category cat =categoryService.findCategory(catid).get() ;
+			product.setCategory(cat);
+			//product.isDisponible();
+			product.setNom("moqejaqmin");
+			product.setQuantity(8960);
+			productService.addProduct(product);
+		}
 
-		 prodserv.ShowProducts();
+	}
+    @Test
+	public void showProducts() {
+
+		 productService.showProducts();
 	}
 	@Test
-	public void ShowProductsInCat() {
+	public void showProductsInCat() {
 		long catid = 2L;
-		 prodserv.ShowProductsInCat(catid);
+		 productService.ShowProductsInCat(catid);
 	}
     @Test
-	public void ShowProduct() {
+	public void showProduct() {
 		long id = 28L ;
-		prodserv.FindProduct(id).get();
+		productService.findProduct(id);
 	}
 	@Test
-	public void DeleteProduct() {
+	public void deleteProduct() {
 		long id = 27L ;
-		prodserv.DeleteProduct(id);
+		productService.deleteProduct(id);
 	}
     @Test
-	public void UpdateProduct() {
+	public void updateProduct() {
 	long id = 28L ;
-	Product prod = prodserv.FindProduct(id).get();
-		Date a = prod.getDateCreation();
+	if(productService.findProduct(id).isPresent()){
+		Product prod = productService.findProduct(id).get();
 		prod.setDateCreation(prod.getDateCreation());
 		prod.setDisponible(true);
 		prod.setQuantity(69);
 		prod.setNom("ya tayssirrrrr");
-		prodserv.UpdateProduct(prod);
+		productService.updateProduct(prod);
+
+	}
+
 
 	}
 

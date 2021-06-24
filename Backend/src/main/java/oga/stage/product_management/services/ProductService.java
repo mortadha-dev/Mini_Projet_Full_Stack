@@ -4,9 +4,7 @@ import oga.stage.product_management.entities.Product;
 import oga.stage.product_management.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,42 +12,41 @@ import java.util.Optional;
 public class ProductService {
 //testing git
 
-    private ProductRepository prodrepos ;
+    private final ProductRepository productRepository ;
 
     @Autowired
-    ProductService(ProductRepository prodrepos){
-        this.prodrepos=prodrepos ;
+    ProductService(ProductRepository productRepository){
+        this.productRepository=productRepository ;
     }
 
-    public void AddProduct(Product product){
-        Date date = new Date();
+    public void addProduct(Product product){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         System.out.println(timestamp);
         product.setDateCreation(timestamp);
         product.setDateModif(null);
-        prodrepos.save(product);
+        productRepository.save(product);
     }
-    public void UpdateProduct(Product product){
-        Date date = new Date();
+    public void updateProduct(Product product){
+
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         product.setDateModif(timestamp);
-        prodrepos.save(product);
+        productRepository.save(product);
     }
 
-    public List<Product> ShowProducts(){
-        return prodrepos.findAll() ;
+    public List<Product> showProducts(){
+        return productRepository.findAll() ;
     }
     public List<Product> ShowProductsInCat(long id ){
 
-        return prodrepos.ShowProductsInCat(id) ;
+        return productRepository.showProductsInCat(id) ;
     }
 
-    public void DeleteProduct (long id ){
-        prodrepos.deleteById(id);
+    public void deleteProduct (long id ){
+        productRepository.deleteById(id);
     }
 
-    public Optional<Product> FindProduct(long id){
-        return prodrepos.findById(id) ;
+    public Optional<Product> findProduct(long id){
+        return productRepository.findById(id) ;
     }
 
 }
