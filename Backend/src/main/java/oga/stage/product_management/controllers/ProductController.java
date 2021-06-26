@@ -1,5 +1,4 @@
 package oga.stage.product_management.controllers;
-
 import oga.stage.product_management.entities.Category;
 import oga.stage.product_management.entities.Product;
 import oga.stage.product_management.exceptions.ResourceNotFoundException;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.ByteArrayInputStream;
-
 import java.io.IOException;
 import java.util.List;
 
