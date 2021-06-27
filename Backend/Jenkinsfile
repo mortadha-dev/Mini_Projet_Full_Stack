@@ -1,28 +1,18 @@
 pipeline {
-
     agent any
-    tools {
-        maven 'maven_3_1_0'
-    }
     stages {
-        stage('Compile stage') {
+        stage('Build stage') {
             steps {
-                bat "mvn clean compile"
+                sh "mvn -version"
+                sh "mvn clean install"
         }
     }
-
-         stage('testing stage') {
-             steps {
-                bat "mvn test"
-        }
+    }
+    post {
+    always{
+    cleanWs()
+    }
     }
 
-          stage('deployment stage') {
-              steps {
-                bat "mvn deploy"
-        }
+
     }
-
-  }
-
-}
