@@ -7,7 +7,7 @@ pipeline {
     stages {
      stage ('Initialize') {
                       steps {
-                          bat '''
+                          sh '''
                               echo "PATH = ${PATH}"
                               echo "M2_HOME = ${M2_HOME}"
                           '''
@@ -15,7 +15,7 @@ pipeline {
                   }
         stage('Build stage') {
             steps {
-              bat 'mvn -f Backend/pom.xml clean compile'
+              sh 'mvn -f Backend/pom.xml test'
         }
     }
     }
