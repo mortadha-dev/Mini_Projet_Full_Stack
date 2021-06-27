@@ -14,7 +14,8 @@
 	<name>product_management</name>
 	<description>first project with oga</description>
 	<properties>
-		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
@@ -93,11 +94,6 @@
 
 	<build>
 		<plugins>
-
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 	<pluginRepositories>
