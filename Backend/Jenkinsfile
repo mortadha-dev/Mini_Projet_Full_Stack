@@ -15,7 +15,7 @@ pipeline {
                   }
         stage('Build stage') {
             steps {
-              sh 'mvn -f Backend/pom.xml clean install'
+              sh 'mvn -f Backend/pom.xml clean compile'
         }
     }
     }
