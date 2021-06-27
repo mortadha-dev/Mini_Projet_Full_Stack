@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    tools {
-            maven 'maven_3_1_0'
-            jdk 'jdk11'
-            }
 
     stages {
         stage ('Compile Stage') {
