@@ -90,21 +90,21 @@ public class ExportProductService {
     public static ByteArrayInputStream productsExcelExport(List<Product> products) throws IOException {
 
           String[] columns = {"dateCreation" , "disponible", "quantity", "nom", "DateModif"};
-          try(Workbook workbook = new XSSFWorkbook();
+          try(var workbook = new XSSFWorkbook();
               var out = new ByteArrayOutputStream()) {
               var creationHelper = workbook.getCreationHelper();
               var sheet = workbook.createSheet();
               sheet.autoSizeColumn(columns.length);
 
-               org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+               var headerFont = workbook.createFont();
                headerFont.setColor(IndexedColors.BLUE1.index);
               var cellStyle = workbook.createCellStyle();
               cellStyle.setFont(headerFont);
 
               var headerRow = sheet.createRow(0);
-              for (int var = 0; var < columns.length; var++) {
-                  var cell = headerRow.createCell(var);
-                  cell.setCellValue(columns[var]);
+              for (var col = 0; col < columns.length; col++) {
+                  var cell = headerRow.createCell(col);
+                  cell.setCellValue(columns[col]);
                   cell.setCellStyle(cellStyle);
               }
               var cellStyle1 = workbook.createCellStyle();

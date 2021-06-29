@@ -6,11 +6,13 @@ import oga.stage.product_management.repositories.CategoryRepository;
 import oga.stage.product_management.repositories.ProductRepository;
 import oga.stage.product_management.services.CategoryService;
 import oga.stage.product_management.services.ProductService;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -33,6 +35,7 @@ public class ProductManagementApplicationTests {
 		Category c = new Category();
 		c.setNom("testunit");
 		c.setQuantity(20);
+		Assertions.assertThat(c.getNom()).isEqualTo("testunit");
 		categoryService.addCategory(c);
 	}
 	@Test
