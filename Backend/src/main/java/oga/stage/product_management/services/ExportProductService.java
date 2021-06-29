@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 @Service
@@ -80,7 +81,8 @@ public class ExportProductService {
             document.close();
         }
         catch (DocumentException e ){
-            System.out.println("context"+ e);
+            Logger.getLogger("My Message");
+
         }
         return  new ByteArrayInputStream(out.toByteArray());
 
