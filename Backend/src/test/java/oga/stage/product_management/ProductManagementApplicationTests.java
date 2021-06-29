@@ -40,7 +40,8 @@ public class ProductManagementApplicationTests {
 	}
 	@Test
 	public void showCategories(){
-		 categoryRepository.findAll();
+
+		categoryRepository.findAll();
 	}
 
 	@Test

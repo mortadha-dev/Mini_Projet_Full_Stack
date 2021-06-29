@@ -1,0 +1,14 @@
+oga\stage\product_management\services\ExportProductService.class
+oga\stage\product_management\services\ProductService.class
+oga\stage\product_management\services\CategoryService.class
+oga\stage\product_management\controllers\ProductController.class
+oga\stage\product_management\entities\Category.class
+oga\stage\product_management\repositories\CategoryRepository.class
+oga\stage\product_management\controllers\CategoryController.class
+oga\stage\product_management\exceptions\GlobalExceptionHandler.class
+oga\stage\product_management\ProductManagementApplication.class
+oga\stage\product_management\exceptions\ResourceNotFoundException.class
+oga\stage\product_management\repositories\ProductRepository.class
+oga\stage\product_management\SimpleCORSFilter.class
+oga\stage\product_management\entities\Product.class
+oga\stage\product_management\exceptions\ErrorDetails.class

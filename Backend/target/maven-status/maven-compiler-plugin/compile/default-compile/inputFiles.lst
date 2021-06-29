@@ -1,0 +1,14 @@
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\controllers\ProductController.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\repositories\ProductRepository.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\entities\Product.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\exceptions\ResourceNotFoundException.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\services\ProductService.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\exceptions\ErrorDetails.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\entities\Category.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\controllers\CategoryController.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\services\ExportProductService.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\repositories\CategoryRepository.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\ProductManagementApplication.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\services\CategoryService.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\SimpleCORSFilter.java
+D:\For_Upload\stage\Mini_Projet_Full_Stack\Backend\src\main\java\oga\stage\product_management\exceptions\GlobalExceptionHandler.java
