@@ -28,7 +28,6 @@ public class Product implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-
     private Category category;
 
 

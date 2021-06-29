@@ -2,6 +2,8 @@ package oga.stage.product_management;
 
 import oga.stage.product_management.entities.Category;
 import oga.stage.product_management.entities.Product;
+import oga.stage.product_management.repositories.CategoryRepository;
+import oga.stage.product_management.repositories.ProductRepository;
 import oga.stage.product_management.services.CategoryService;
 import oga.stage.product_management.services.ProductService;
 import org.junit.Test;
@@ -13,11 +15,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class ProductManagementApplicationTests {
-	@Autowired
-	public CategoryService categoryService ;
 
-	@Autowired
+	public CategoryService categoryService ;
 	public ProductService productService ;
+	public CategoryRepository categoryRepository ;
+	public ProductRepository productRepository ;
+	@Autowired
+	public ProductManagementApplicationTests (CategoryService categoryService , ProductService productService , CategoryRepository categoryRepository, ProductRepository productRepository){
+		this.categoryService=categoryService ;
+		this.productService=productService ;
+		this.categoryRepository=categoryRepository ;
+		this.productRepository=productRepository ;
+	}
 
 	@Test
 	public void addCategory( ){
@@ -28,25 +37,25 @@ public class ProductManagementApplicationTests {
 	}
 	@Test
 	public void showCategories(){
-		 categoryService.showCategories();
+		 categoryRepository.findAll();
 	}
 
 	@Test
 	public void showCategory(){
 		long id= 2L ;
-		if(categoryService.findCategory(id).isPresent())
-		 categoryService.findCategory(id).get();
+		if(categoryRepository.findById(id).isPresent())
+		 categoryRepository.findById(id).get();
 	}
 //	@Test
 	public void deleteCategory(){
 		long id = 15L ;
-		categoryService.deleteCategory(id);
+		categoryRepository.deleteById(id);
 	}
 	@Test
 	public void updateCategory(){
 		long id = 16L ;
-		if(categoryService.findCategory(id).isPresent()){
-			Category cat = categoryService.findCategory(id).get() ;
+		if(categoryRepository.findById(id).isPresent()){
+			Category cat = categoryRepository.findById(id).get() ;
 			cat.setDateCreation(cat.getDateCreation());
 			cat.setQuantity(300);
 			cat.setNom("going up ");
@@ -59,8 +68,8 @@ public class ProductManagementApplicationTests {
 	public void addProduct() {
 		Product product = new Product();
 		long catid = 17L ;
-		if(categoryService.findCategory(catid).isPresent()){
-			Category cat =categoryService.findCategory(catid).get() ;
+		if(categoryRepository.findById(catid).isPresent()){
+			Category cat =categoryRepository.findById(catid).get() ;
 			product.setCategory(cat);
 			//product.isDisponible();
 			product.setNom("moqejaqmin");
@@ -72,28 +81,28 @@ public class ProductManagementApplicationTests {
     @Test
 	public void showProducts() {
 
-		 productService.showProducts();
+		 productRepository.findAll();
 	}
 	@Test
 	public void showProductsInCat() {
 		long catid = 2L;
-		 productService.ShowProductsInCat(catid);
+		 productRepository.showProductsInCat(catid);
 	}
     @Test
 	public void showProduct() {
 		long id = 28L ;
-		productService.findProduct(id);
+		productRepository.findById(id);
 	}
 	@Test
 	public void deleteProduct() {
 		long id = 27L ;
-		productService.deleteProduct(id);
+		productRepository.deleteById(id);
 	}
     @Test
 	public void updateProduct() {
 	long id = 28L ;
-	if(productService.findProduct(id).isPresent()){
-		Product prod = productService.findProduct(id).get();
+	if(productRepository.findById(id).isPresent()){
+		Product prod = productRepository.findById(id).get();
 		prod.setDateCreation(prod.getDateCreation());
 		prod.setDisponible(true);
 		prod.setQuantity(69);

@@ -2,7 +2,8 @@ package oga.stage.product_management.controllers;
 import oga.stage.product_management.entities.Category;
 import oga.stage.product_management.entities.Product;
 import oga.stage.product_management.exceptions.ResourceNotFoundException;
-import oga.stage.product_management.services.CategoryService;
+import oga.stage.product_management.repositories.CategoryRepository;
+import oga.stage.product_management.repositories.ProductRepository;
 import oga.stage.product_management.services.ExportProductService;
 import oga.stage.product_management.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,20 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-
+    private final ProductRepository productRepository;
     private final  ProductService productService;
-    private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    ProductController(ProductService productService,CategoryService categoryService)
+    ProductController(ProductService productService, CategoryRepository categoryRepository, ProductRepository productRepository)
     {
         this.productService = productService;
-        this.categoryService=categoryService ;
+        this.categoryRepository=categoryRepository ;
+        this.productRepository = productRepository ;
     }
 
 
@@ -36,7 +37,7 @@ public class ProductController {
     @CrossOrigin(origins = "http://localhost:8085")
     @PostMapping("/AddProduct/{catid}")
     public void addProduct(@RequestBody Product product, @PathVariable("catid") long catitd) {
-        Category cat = categoryService.findCategory(catitd).orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catitd));
+        Category cat = categoryRepository.findById(catitd).orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catitd));
         product.setCategory(cat);
         if(!product.isDisponible()){
             product.setQuantity(0);
@@ -47,28 +48,28 @@ public class ProductController {
 
     @GetMapping("/showproducts")
     public List<Product> showProducts() {
-        return productService.showProducts();
+        return productRepository.findAll();
     }
 
     @GetMapping("/findbycatid/{catid}")
     public List<Product> showProductsInCat(@PathVariable("catid") long catid) {
-        return productService.ShowProductsInCat(catid);
+        return productRepository.showProductsInCat(catid);
     }
 
     @GetMapping("/findproduct/{id}")
     public Product showProduct(@PathVariable("id") Long id) {
-        return productService.findProduct(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id :" + id));
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id :" + id));
     }
 
     @DeleteMapping("/deleteproduct/{id}")
     public void deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteProduct(id);
+        productRepository.deleteById(id);
     }
 
 
     @PutMapping("/updateproduct/{id}")
     public void updateProduct(@RequestBody Product product, @PathVariable("id") long id) {
-        Product prod = productService.findProduct(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id :" + id));
+        Product prod = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id :" + id));
         prod.setDateCreation(prod.getDateCreation());
         prod.setDisponible(product.isDisponible());
         prod.setQuantity(product.getQuantity());
@@ -79,7 +80,7 @@ public class ProductController {
 
     @GetMapping("/exportpdf/{catid}")
     public ResponseEntity<InputStreamResource> exportTermsPdf(@PathVariable("catid") long catid) {
-        List<Product> products = productService.ShowProductsInCat(catid);
+        List<Product> products = productRepository.showProductsInCat(catid);
         ByteArrayInputStream bais = ExportProductService.productsPDFExport(products);
         var headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=products.pdf");
@@ -88,7 +89,7 @@ public class ProductController {
 
     @GetMapping("/exportexcel/{catid}")
     public ResponseEntity<InputStreamResource> exportTermsExcel(@PathVariable("catid") long catid) throws IOException {
-        List<Product> products = productService.ShowProductsInCat(catid);
+        List<Product> products = productRepository.showProductsInCat(catid);
         ByteArrayInputStream bais = ExportProductService.productsExcelExport(products);
         var headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=products.xlsx");
