@@ -16,15 +16,14 @@ public class ProductService {
     }
 
     public void addProduct(Product product){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestamp);
+        var timestamp = new Timestamp(System.currentTimeMillis());
         product.setDateCreation(timestamp);
         product.setDateModif(null);
         productRepository.save(product);
     }
     public void updateProduct(Product product){
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        var timestamp = new Timestamp(System.currentTimeMillis());
         product.setDateModif(timestamp);
         productRepository.save(product);
     }

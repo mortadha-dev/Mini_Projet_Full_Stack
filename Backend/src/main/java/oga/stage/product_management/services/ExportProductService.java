@@ -9,6 +9,7 @@ import oga.stage.product_management.entities.Product;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class ExportProductService {
         try{
             PdfWriter.getInstance(document, out);
             document.open();
-            com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 14 , BaseColor.BLACK);
+            var font = FontFactory.getFont(FontFactory.COURIER, 14 , BaseColor.BLACK);
             var para =new Paragraph("Products list " ,font);
             para.setAlignment(Element.ALIGN_CENTER);
             document.add(para) ;
@@ -32,7 +33,7 @@ public class ExportProductService {
             var table = new PdfPTable(5) ;
             Stream.of("dateCreation" , "disponible", "quantity", "nom", "DateModif").forEach(headerTitle->{
                     var header = new PdfPCell();
-                    com.itextpdf.text.Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+                    var headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
                     header.setHorizontalAlignment(Element.ALIGN_CENTER);
                     header.setBorderWidth(1);
@@ -79,7 +80,7 @@ public class ExportProductService {
             document.close();
         }
         catch (DocumentException e ){
-e.printStackTrace();
+            System.out.println("context"+ e);
         }
         return  new ByteArrayInputStream(out.toByteArray());
 
@@ -90,27 +91,26 @@ e.printStackTrace();
           try(Workbook workbook = new XSSFWorkbook();
               var out = new ByteArrayOutputStream()) {
               var creationHelper = workbook.getCreationHelper();
-              Sheet sheet = workbook.createSheet();
+              var sheet = workbook.createSheet();
               sheet.autoSizeColumn(columns.length);
 
-              System.out.println("heloooooo");
                org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
                headerFont.setColor(IndexedColors.BLUE1.index);
-              CellStyle cellStyle = workbook.createCellStyle();
+              var cellStyle = workbook.createCellStyle();
               cellStyle.setFont(headerFont);
 
-              Row headerRow = sheet.createRow(0);
-              for (int col = 0; col < columns.length; col++) {
-                  Cell cell = headerRow.createCell(col);
-                  cell.setCellValue(columns[col]);
+              var headerRow = sheet.createRow(0);
+              for (int var = 0; var < columns.length; var++) {
+                  var cell = headerRow.createCell(var);
+                  cell.setCellValue(columns[var]);
                   cell.setCellStyle(cellStyle);
               }
-              CellStyle cellStyle1 = workbook.createCellStyle();
+              var cellStyle1 = workbook.createCellStyle();
               cellStyle1.setDataFormat(creationHelper.createDataFormat().getFormat("#"));
 
-              int rowIndex = 1;
+              var rowIndex = 1;
               for (Product product : products) {
-                  Row row = sheet.createRow(rowIndex++);
+                  var row = sheet.createRow(rowIndex++);
                   row.createCell(0).setCellValue(product.getDateCreation());
                   row.createCell(1).setCellValue(product.isDisponible());
                   row.createCell(2).setCellValue(product.getQuantity());

@@ -18,14 +18,14 @@ public class CategoryService {
     }
 
     public void addCategory(Category category){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        var timestamp = new Timestamp(System.currentTimeMillis());
         category.setDateCreation(timestamp);
         category.setDateModif(null);
         categoryRepository.save(category);
     }
 
     public void updateCategory(Category category){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        var timestamp = new Timestamp(System.currentTimeMillis());
         category.setDateModif(timestamp);
         categoryRepository.save(category);
     }
