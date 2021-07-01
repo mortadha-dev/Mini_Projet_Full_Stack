@@ -32,7 +32,7 @@ public class CategoryController {
         var category= modelMapper.map(categoryDTO, Category.class);
         categoryService.addCategory(category);
     }
-
+//test
     @GetMapping("/showcategories")
     public List<Category> showCategories(){
         return categoryRepository.findAll();
