@@ -1,10 +1,8 @@
 package oga.stage.product_management.controllers;
 
 import oga.stage.product_management.entities.Category;
-import oga.stage.product_management.entitiesDTO.CategoryDTO;
 import oga.stage.product_management.repositories.CategoryRepository;
 import oga.stage.product_management.services.CategoryService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,21 +16,18 @@ public class CategoryController {
 
     private final CategoryRepository categoryRepository ;
 
-    private final ModelMapper modelMapper ;
 
     @Autowired
-    public CategoryController(CategoryService categoryService,CategoryRepository categoryRepository, ModelMapper modelMapper){
+    public CategoryController(CategoryService categoryService,CategoryRepository categoryRepository){
         this.categoryService=categoryService ;
         this.categoryRepository=categoryRepository ;
-        this.modelMapper=modelMapper ;
     }
 
     @PostMapping("/AddCategory")
-    public void addCategory(@RequestBody CategoryDTO categoryDTO){
-        var category= modelMapper.map(categoryDTO, Category.class);
+    public void addCategory(@RequestBody Category category){
         categoryService.addCategory(category);
     }
-//test
+
     @GetMapping("/showcategories")
     public List<Category> showCategories(){
         return categoryRepository.findAll();
