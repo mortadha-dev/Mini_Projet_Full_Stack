@@ -1,6 +1,5 @@
 package oga.stage.product_management.services;
 
-
 import oga.stage.product_management.entities.Category;
 import oga.stage.product_management.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
