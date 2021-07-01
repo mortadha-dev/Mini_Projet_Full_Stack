@@ -1,11 +1,13 @@
 package oga.stage.product_management.controllers;
 import oga.stage.product_management.entities.Category;
 import oga.stage.product_management.entities.Product;
+import oga.stage.product_management.entitiesDTO.ProductDTO;
 import oga.stage.product_management.exceptions.ResourceNotFoundException;
 import oga.stage.product_management.repositories.CategoryRepository;
 import oga.stage.product_management.repositories.ProductRepository;
 import oga.stage.product_management.services.ExportProductService;
 import oga.stage.product_management.services.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -23,21 +25,26 @@ public class ProductController {
     private final ProductRepository productRepository;
     private final  ProductService productService;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper ;
+
 
     @Autowired
-    ProductController(ProductService productService, CategoryRepository categoryRepository, ProductRepository productRepository)
+    ProductController(ProductService productService, CategoryRepository categoryRepository, ProductRepository productRepository, ModelMapper modelMapper)
     {
         this.productService = productService;
         this.categoryRepository=categoryRepository ;
         this.productRepository = productRepository ;
+        this.modelMapper=modelMapper ;
     }
 
 
 
     @CrossOrigin(origins = "http://localhost:8085")
     @PostMapping("/AddProduct/{catid}")
-    public void addProduct(@RequestBody Product product, @PathVariable("catid") long catitd) {
+    public void addProduct(@RequestBody ProductDTO productDto, @PathVariable("catid") long catitd) {
         Category cat = categoryRepository.findById(catitd).orElseThrow(() -> new ResourceNotFoundException("category not found with id :" + catitd));
+
+        var product= modelMapper.map(productDto, Product.class);
         product.setCategory(cat);
         if(!product.isDisponible()){
             product.setQuantity(0);
