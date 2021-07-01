@@ -19,6 +19,9 @@ import java.util.stream.Stream;
 
 @Service
 public class ExportProductService {
+    private ExportProductService() {
+
+    }
 
     public static ByteArrayInputStream productsPDFExport(List<Product> products){
         var document = new Document() ;
